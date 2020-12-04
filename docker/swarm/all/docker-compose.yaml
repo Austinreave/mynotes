@@ -1,0 +1,50 @@
+version: "3.5"
+services:
+  shop_mobile_back_9191:
+    restart: always
+    build:
+      context: .
+      args:
+        ENVARG: mirror
+      dockerfile: Dockerfile
+    image: shop_mobile_back:9191
+    environment:
+      - BEEGO_MODE=mirror
+    ports:
+      - 9191:9193
+    networks:
+      - diagnosis_network
+    volumes:
+      - ./test:/app/test
+  shop_mobile_back_9192:
+    restart: always
+    build:
+      context: .
+      args:
+        ENVARG: mirror
+      dockerfile: Dockerfile
+    image: shop_mobile_back:9192
+    environment:
+      - BEEGO_MODE=mirror
+    ports:
+      - 9192:9193
+    networks:
+      - diagnosis_network
+  shop_mobile_back_9193:
+    restart: always
+    build:
+      context: .
+      args:
+        ENVARG: mirror
+      dockerfile: Dockerfile
+    image: shop_mobile_back:9193
+    environment:
+      - BEEGO_MODE=mirror
+    ports:
+      - 9193:9193
+    networks:
+      - diagnosis_network
+
+networks:
+  diagnosis_network:
+    driver: bridge
