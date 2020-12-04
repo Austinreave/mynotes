@@ -1,0 +1,37 @@
+/*****rabbitmq******/
+input{
+    rabbitmq{
+    host=>"rabbitmq"                      
+    port=> 5672                            
+    user=>"user"                           
+    password=>"password"                   
+    queue=>"logstash-rabbitmq"             
+    durable=> true                         
+    codec=>json                            
+    } 
+}
+
+output {
+  elasticsearch {
+        hosts => ["elasticsearch:9200"]
+        index => "logstash-rabbitmq"
+        user => "elastic"
+        password => "admin888"
+    }
+}
+
+/****读取本地文件*****/
+input {
+    file {
+        path => ["/usr/share/logstash/pipeline/logs/test.log"]
+        start_position => "beginning"
+    }
+}
+output {
+    elasticsearch {
+        hosts => ["elasticsearch:9200"]
+        index => "test"
+        user => "elastic"
+        password => "admin888"
+    }
+}

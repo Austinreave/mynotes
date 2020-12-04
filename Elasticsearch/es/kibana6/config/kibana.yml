@@ -1,0 +1,8 @@
+elasticsearch.hosts: http://elasticsearch:9200
+server.host: "0.0.0.0"
+server.name: kibana
+xpack.monitoring.ui.container.elasticsearch.enabled: true
+i18n.locale: zh-CN #中文
+#Elasticsearch 设置了基本的权限认证，该配置项提供了用户名和密码，用于 Kibana 启动时维护索引。Kibana 用户仍需要 Elasticsearch 由 Kibana 服务端代理的认证。
+elasticsearch.username: "elastic"
+elasticsearch.password: "admin888"

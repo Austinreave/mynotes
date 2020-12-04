@@ -1,0 +1,28 @@
+version: '3'
+services:
+  elasticsearch:
+    image: elasticsearch:7.1.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ./elasticsearch6/plugins:/usr/share/elasticsearch/plugins #插件文件挂载
+      - ./elasticsearch6/data:/usr/share/elasticsearch/data #数据文件挂载
+      - ./elasticsearch6/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml #配置文件挂载
+    networks:
+      - efknet
+    ports:
+      - 9200:9200
+  kibana:
+    image: kibana:7.1.0
+    container_name: kibana6
+    depends_on:
+      - elasticsearch #kibana在elasticsearch启动之后再启动
+    volumes:
+      - ./kibana6/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - efknet
+    ports:
+      - 5601:5601
+networks:
+  efknet:
