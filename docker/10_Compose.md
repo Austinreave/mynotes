@@ -101,7 +101,7 @@ docker-compose up
 
 ![d5b29f002e8e45b2aae71f94333697c](./images/d5b29f002e8e45b2aae71f94333697c.png)
 
-![image-20200913154003883](/Users/yuyu/Library/Application Support/typora-user-images/image-20200913154003883.png)
+![image-20200913154003883](./images/image-20200913154003883.png)
 
 + **version**：指定 compose 文件的版本
 

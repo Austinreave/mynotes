@@ -12,11 +12,11 @@
 
 + **App** - 虚拟机操作系统上的应用，例如nginx
 
-  ![aHR0cHM6Ly93d3cucWlrZWd1LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNS92aXJ0dWFsaXphdGlvbi0xLmpwZw](/Users/yuyu/Desktop/docker/images/aHR0cHM6Ly93d3cucWlrZWd1LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNS92aXJ0dWFsaXphdGlvbi0xLmpwZw.jpeg)
+  ![aHR0cHM6Ly93d3cucWlrZWd1LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNS92aXJ0dWFsaXphdGlvbi0xLmpwZw](./images/aHR0cHM6Ly93d3cucWlrZWd1LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNS92aXJ0dWFsaXphdGlvbi0xLmpwZw.jpeg)
 
 ##### Docker的体系结构
 
-![aHR0cHM6Ly93d3cucWlrZWd1LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNS92YXJpb3VzX2xheWVycy0xLmpwZw](/Users/yuyu/Desktop/docker/images/aHR0cHM6Ly93d3cucWlrZWd1LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNS92YXJpb3VzX2xheWVycy0xLmpwZw.jpeg)
+![aHR0cHM6Ly93d3cucWlrZWd1LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNS92YXJpb3VzX2xheWVycy0xLmpwZw](./images/aHR0cHM6Ly93d3cucWlrZWd1LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNS92YXJpb3VzX2xheWVycy0xLmpwZw.jpeg)
 
 - **server** - 表示真实电脑。
 - **Host OS** - 真实电脑的操作系统，例如：Windows，Linux。

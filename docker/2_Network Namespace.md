@@ -2,7 +2,7 @@
 
 + Network Namespace 是 Linux 内核提供的功能，是实现网络虚拟化的重要功能，它能创建多个隔离的网络空间，它们有独自网络栈信息。不管是虚拟机还是容器，运行的时候仿佛自己都在独立的网络中。而且不同Network Namespace的资源相互不可见，彼此之间无法通信。
 
-  ![image-20200904133345253](/Users/yuyu/Library/Application Support/typora-user-images/image-20200904133345253.png)
+  ![image-20200904133345253](./images/image-20200904133345253.png)
 
 + 可以借助`ip netns`命令来完成对 Network Namespace 的各种操作
 
@@ -12,7 +12,7 @@
 
   + 引入veth pair是为了在不同的 Network Namespace 直接进行通信，利用它可以直接将两个 Network Namespace 连接起来。
 
-    ![image-20200904133311727](/Users/yuyu/Library/Application Support/typora-user-images/image-20200904133311727.png)
+    ![image-20200904133311727](./images/image-20200904133311727.png)
 
   + 实现Network Namespace间通信
 
@@ -83,7 +83,7 @@
 
 + 网桥就是把一台机器上的若干个网络接口“连接”起来。其结果是，其中一个网口收到的报文会被复制给其他网口并发送出去。以使得网口之间的报文能够互相转发。
 
-  ![image-20200904151034510](/Users/yuyu/Library/Application Support/typora-user-images/image-20200904151034510.png)
+  ![image-20200904151034510](./images/image-20200904151034510.png)
 
 + Linux通过Network Namespace实现了网络的隔离，使网络协议栈之间互不干扰；并通过veth pair和网桥实现了相同主机上多个Network Namespace之间的数据通信
 
