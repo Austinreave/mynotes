@@ -4,8 +4,6 @@
 
 #### 1.2 操作流程
 
- ![20180919131632347](C:/Users/星星/Desktop/mysql/3/文档/assets/20180919131632347.png) 
-
 1. 客户端发送一条查询给服务器；
 2. 服务器先会检查查询缓存，如果命中了缓存，则立即返回存储在缓存中的结果。否则进入下一阶段；
 3. 服务器端进行SQL解析、预处理，再由优化器生成对应的执行计划；
@@ -20,7 +18,7 @@
    SHOW VARIABLES LIKE 'have_query_cache';	
    ```
 
-   ![1555249929012](C:/Users/星星/Desktop/mysql/3/文档/assets/1555249929012.png) 
+   ![1555249929012](./img/1555249929012.png) 
 
 2. 查看当前MySQL是否开启了查询缓存 ：
 
@@ -28,7 +26,7 @@
    SHOW VARIABLES LIKE 'query_cache_type';
    ```
 
-   ![1555250015377](C:/Users/星星/Desktop/mysql/3/文档/assets/1555250015377.png) 
+   ![1555250015377](./img/1555250015377.png) 
 
 3. 查看查询缓存的占用大小 ：
 
@@ -36,7 +34,7 @@
    SHOW VARIABLES LIKE 'query_cache_size';
    ```
 
-   ![1555250142451](C:/Users/星星/Desktop/mysql/3/文档/assets/1555250142451.png)  	
+   ![1555250142451](./img/1555250142451.png)  	
 
 4. 查看查询缓存的状态变量：
 
@@ -44,7 +42,7 @@
    SHOW STATUS LIKE 'Qcache%';
    ```
 
-   ![1555250443958](C:/Users/星星/Desktop/mysql/3/文档/assets/1555250443958.png) 
+   ![1555250443958](./img/1555250443958.png) 
 
    各个变量的含义如下：
 

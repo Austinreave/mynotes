@@ -4,7 +4,7 @@
 
 + **优化order by语句**
 
-   #####  环境准备
+  #####  环境准备
 
   ```SQL
   CREATE TABLE `emp` (
@@ -21,19 +21,21 @@
 
   1). 第一种是通过对返回数据进行排序，也就是通常说的 filesort 排序，所有不是通过索引直接返回排序结果的排序都叫 FileSort 排序。
 
-  ![1556335817763](C:/Users/星星/Desktop/mysql/2/文档/assets/1556335817763.png) 
+  ![1556335817763](./img/1556335817763.png) 
 
   2). 第二种通过有序索引顺序扫描直接返回有序数据，这种情况即为 using index，不需要额外排序，操作效率高。
 
-  ![1556335866539](C:/Users/星星/Desktop/mysql/2/文档/assets/1556335866539.png) 
+  ![1556335866539](./img/1556335866539.png) 
 
   多字段排序
 
-  ![1556336352061](C:/Users/星星/Desktop/mysql/2/文档/assets/1556336352061.png) 
+  ![1556336352061](./img/1556336352061.png) 
 
   
 
-  了解了MySQL的排序方式，优化目标就清晰了：尽量减少额外的排序，通过索引直接返回有序数据。where 条件和Order by 使用相同的索引，并且Order By 的顺序和索引顺序相同， 并且Order  by 的字段都是升序，或者都是降序。否则肯定需要额外的操作，这样就会出现FileSort。
+  了解MySQL的排序方式，优化目标就清晰了：
+
+  + 尽量减少额外的排序，通过索引直接返回有序数据。where 条件和Order by 使用相同的索引，并且Order By 的顺序和索引顺序相同， 并且Order  by 的字段都是升序，或者都是降序。否则肯定需要额外的操作，这样就会出现FileSort。
 
 + **优化group by 语句**
 
@@ -47,7 +49,7 @@
   explain select age,count(*) from emp group by age;
   ```
 
-  ![1556339573979](C:/Users/星星/Desktop/mysql/2/文档/assets/1556339573979.png)  
+  ![1556339573979](./img/1556339573979.png)  
 
   优化后
 
@@ -55,7 +57,7 @@
   explain select age,count(*) from emp group by age order by null;
   ```
 
-  ![1556339633161](C:/Users/星星/Desktop/mysql/2/文档/assets/1556339633161.png)  
+  ![1556339633161](./img/1556339633161.png)  
 
   从上面的例子可以看出，第一个SQL语句需要进行"filesort"，而第二个SQL由于order  by  null 不需要进行 "filesort"， 而上文提过Filesort往往非常耗费时间。
 
@@ -65,7 +67,7 @@
   create index idx_emp_age_salary on emp(age,salary)；
   ```
 
-  ![1556339688158](C:/Users/星星/Desktop/mysql/2/文档/assets/1556339688158.png) 
+  ![1556339688158](./img/1556339688158.png) 
 
 + **优化嵌套查询**
 
@@ -79,7 +81,7 @@
 
   执行计划为 : 
 
-  ![1556359399199](C:/Users/星星/Desktop/mysql/2/文档/assets/1556359399199.png)   
+  ![1556359399199](./img/1556359399199.png)   
 
   
 
@@ -89,7 +91,7 @@
   explain select * from t_user u , user_role ur where u.id = ur.user_id;
   ```
 
-  ![1556359482142](C:/Users/星星/Desktop/mysql/2/文档/assets/1556359482142.png)   
+  ![1556359482142](./img/1556359482142.png)   
 
   
 
@@ -101,7 +103,7 @@
 
   获取 emp 表中的所有的索引 ： 
 
-  ![1556354464657](C:/Users/星星/Desktop/mysql/2/文档/assets/1556354464657.png)  
+  ![1556354464657](./img/1556354464657.png)  
 
   示例 ： 
 
@@ -109,13 +111,13 @@
   explain select * from emp where id = 1 or age = 30;
   ```
 
-  ![1556354887509](C:/Users/星星/Desktop/mysql/2/文档/assets/1556354887509.png)
+  ![1556354887509](./img/1556354887509.png)
 
-  ![1556354920964](C:/Users/星星/Desktop/mysql/2/文档/assets/1556354920964.png)  
+  ![1556354920964](./img/1556354920964.png)  
 
   建议使用 union 替换 or ： 
 
-  ![1556355027728](C:/Users/星星/Desktop/mysql/2/文档/assets/1556355027728.png) 
+  ![1556355027728](./img/1556355027728.png) 
 
   我们来比较下重要指标，发现主要差别是 type 和 ref 这两项
 
@@ -135,13 +137,13 @@
 
   一般分页查询时，通过创建覆盖索引能够比较好地提高性能。一个常见又非常头疼的问题就是 limit 2000000,10  ，此时需要MySQL排序前2000010 记录，仅仅返回2000000 - 2000010 的记录，其他记录丢弃，查询排序的代价非常大 。
 
-  ![1556361314783](C:/Users/星星/Desktop/mysql/2/文档/assets/1556361314783.png) 
+  ![1556361314783](./img/1556361314783.png) 
 
   ##### 优化思路一
 
   在索引上完成排序分页操作，最后根据主键关联回原表查询所需要的其他列内容。
 
-  ![1556416102800](C:/Users/星星/Desktop/mysql/2/文档/assets/1556416102800.png) 
+  ![1556416102800](./img/1556416102800.png) 
 
   
 
@@ -149,7 +151,7 @@
 
   该方案适用于主键自增的表，可以把Limit 查询转换成某个位置的查询 。
 
-  ![1556363928151](C:/Users/星星/Desktop/mysql/2/文档/assets/1556363928151.png) 
+  ![1556363928151](./img/1556363928151.png) 
 
 + **使用SQL提示**
 
@@ -163,7 +165,7 @@
   create index idx_seller_name on tb_seller(name);
   ```
 
-  ![1556370971576](C:/Users/星星/Desktop/mysql/2/文档/assets/1556370971576.png) 
+  ![1556370971576](./img/1556370971576.png) 
 
   ##### IGNORE INDEX
 
@@ -173,7 +175,7 @@
    explain select * from tb_seller ignore index(idx_seller_name) where name = '小米科技';
   ```
 
-  ![1556371004594](C:/Users/星星/Desktop/mysql/2/文档/assets/1556371004594.png) 
+  ![1556371004594](./img/1556371004594.png) 
 
   ##### FORCE INDEX
 
@@ -183,7 +185,7 @@
   create index idx_seller_address on tb_seller(address);
   ```
 
-  ![1556371355788](C:/Users/星星/Desktop/mysql/2/文档/assets/1556371355788.png) 
+  ![1556371355788](./img/1556371355788.png) 
 
   
 
