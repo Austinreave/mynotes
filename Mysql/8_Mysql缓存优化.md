@@ -71,8 +71,6 @@ SELECT SQL_CACHE id, name FROM customer;
 SELECT SQL_NO_CACHE id, name FROM customer;
 ```
 
-
-
 #### 2.6 查询缓存失效的情况（整个sql语句发生改动时）
 
 1） SQL 语句不一致的情况， 要想命中查询缓存，查询的SQL语句必须一致。

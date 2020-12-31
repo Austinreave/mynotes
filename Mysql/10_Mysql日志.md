@@ -22,22 +22,16 @@ show variables like 'log_error%';
 
 二进制日志（BINLOG）记录了所有的 DDL（数据定义语言）语句和 DML（数据操纵语言）语句，但是不包括数据查询语句。此日志对于灾难时的数据恢复起着极其重要的作用，MySQL的主从复制， 就是通过该binlog实现的。
 
-二进制日志，默认情况下是没有开启的，需要到MySQL的配置文件中开启，并配置MySQL日志的格式。 
-
-配置文件位置 : /usr/my.cnf
-
-日志存放位置 : 配置时，给定了文件名但是没有指定路径，日志默认写入Mysql的数据目录。
+二进制日志，默认情况下是没有开启的，需要到MySQL的配置文件中开启，并配置MySQL日志的格式。 配置文件位置 : /usr/my.cnf
 
 ```
+#日志存放位置 : 配置时，给定了文件名但是没有指定路径，日志默认写入Mysql的数据目录。
 #配置开启binlog日志， 日志的文件前缀为 mysqlbin -----> 生成的文件名如 : mysqlbin.000001,mysqlbin.000002
-log_bin=mysqlbin
 
+log_bin=mysqlbin
 #配置二进制日志的格式
 binlog_format=STATEMENT
-
 ```
-
-
 
 ##### 2.2 日志格式
 
@@ -45,19 +39,9 @@ binlog_format=STATEMENT
 
 该日志格式在日志文件中记录的都是SQL语句（statement），每一条对数据进行修改的SQL都会记录在日志文件中，通过Mysql提供的mysqlbinlog工具，可以清晰的查看到每条语句的文本。主从复制的时候，从库（slave）会将日志解析为原文本，并在从库重新执行一次。
 
-
-
 **ROW**
 
 该日志格式在日志文件中记录的是每一行的数据变更，而不是记录SQL语句。比如，执行SQL语句 ： update tb_book set status='1' , 如果是STATEMENT 日志格式，在日志中会记录一行SQL文件； 如果是ROW，由于是对全表进行更新，也就是每一行记录都会发生变更，ROW 格式的日志中会记录每一行的数据变更。
-
-
-
-**MIXED**
-
-这是目前MySQL默认的日志格式，即混合了STATEMENT 和 ROW两种格式。默认情况下采用STATEMENT，但是在一些特殊情况下采用ROW来进行记录。MIXED 格式能尽量利用两种模式的优点，而避开他们的缺点。
-
-
 
 ##### 2.3 日志读取
 
@@ -65,10 +49,7 @@ binlog_format=STATEMENT
 
 ```
 mysqlbinlog log-file；
-
 ```
-
-
 
 **查看STATEMENT格式日志** 
 
@@ -94,8 +75,6 @@ mysqlbinlog mysqlbing.000001；
 ```
 
 ![1554080016778](./img/1554080016778.png) 
-
-
 
 **查看ROW格式日志**
 
@@ -158,9 +137,7 @@ Reset Master
 
 #### 3 查询日志
 
-查询日志中记录了客户端的所有操作语句，而二进制日志不包含查询数据的SQL语句。
-
-默认情况下， 查询日志是未开启的。如果需要开启查询日志，可以设置以下配置 ：
+查询日志中记录了客户端的所有操作语句，而二进制日志不包含查询数据的SQL语句。默认情况下， 查询日志是未开启的。如果需要开启查询日志，可以设置以下配置 ：
 
 ```
 #该选项用来开启查询日志 ， 可选值 ： 0 或者 1 ； 0 代表关闭， 1 代表开启 
@@ -175,8 +152,6 @@ general_log_file=file_name
 
 ![1554128184632](./img/1554128184632.png) 
 
-
-
 配置完毕之后，在数据库执行以下操作 ：
 
 ```
@@ -186,8 +161,6 @@ update tb_book set name = 'lucene入门指南' where id = 5;
 select * from tb_book where id < 8;
 
 ```
-
-
 
 执行完毕之后， 再次来查询日志文件 ： 
 
@@ -237,7 +210,6 @@ select id, title,price,num ,status from tb_item where id = 1;
 
 ```
 select * from tb_item where title like '%阿尔卡特 (OT-927) 炭黑 联通3G手机 双卡双待165454%' ;
-
 ```
 
 ![1554130532577](./img/1554130532577.png) 
