@@ -1,7 +1,7 @@
 #### RUN 命令
 
 ```
-docker run -itd ubuntu /bin/bash #放在镜像名后的是命令，/bin/bash：就是shell等待你的输入,并且执行你提交的命令；-it提供终端并且交互式操作，-d后台运行
+docker run -itd ubuntu /bin/bash #放在镜像名后的是命令，/bin/bash：通过shell执行你提交的命令；-it提供终端并且交互式操作，-d后台运行
 
 docker run -P training/webapp go run main.go #将容器内部使用的网络端口随机映射到我们使用的主机上。大P和小p的区别是:P系统走自己默认的ip和主机映射，p是自定义ip和主机映射
 
@@ -13,7 +13,6 @@ docker run --memory=200M b750bbbcfd88 --vm 1 --verbose --vm-bytes 500M
 --vm 1启动一个进程； 
 --vm-bytes 500M 给进程分配内存 
 注意:进程内存不能大于容器内存
-
 docker run --cpu-shares=10 b750bbbcfd88 --cpu 1 #分配cpu权权重
 ```
 

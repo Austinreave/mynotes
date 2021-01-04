@@ -35,7 +35,7 @@ func Register(etcdAddr, name string, addr string, ttl int64) error {
       }
    }
 //定时器异步执行
-   ticker := time.NewTicker(time.Second * time.Duration(ttl))
+ticker := time.NewTicker(time.Second * time.Duration(ttl))
 //主要作用保证grpc服务和etcd保持持久连接（断电、断网）
    go func() {
       for {
@@ -75,7 +75,8 @@ func withAlive(name string, addr string, ttl int64) error {
    if err != nil {
       fmt.Printf("put etcd error:%s", err)
       return err
-   }
+}
+
 //保持长连接
    ch, err := cli.KeepAlive(context.Background(), leaseResp.ID)
    if err != nil {
@@ -91,7 +92,7 @@ func withAlive(name string, addr string, ttl int64) error {
          // fmt.Println("ttl:", ka.TTL)
       }
    }()
--l
+		-l
    return nil
 }
 ```

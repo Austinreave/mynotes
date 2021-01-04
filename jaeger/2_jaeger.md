@@ -1,6 +1,6 @@
 #### jaeger架构
 
-![Architecture](/Users/yuyu/Desktop/jaeger/img/architecture-v1.png)
+![Architecture](img/architecture-v1.png)
 
 ##### jaeger组件介绍：
 
@@ -13,7 +13,7 @@
 
 #### Trace & Span
 
-![Traces And Spans](/Users/yuyu/Desktop/jaeger/img/spans-traces.png)
+![Traces And Spans](img/spans-traces.png)
 
 #### docker-compose安装
 

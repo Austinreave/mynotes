@@ -81,7 +81,7 @@
 * Topic：区分消息的种类；一个发送者可以发送消息给一个或者多个Topic；一个消息的接收者可以订阅一个或者多个Topic消息
 * Message Queue：相当于是Topic的分区；用于并行发送和接收消息；管道队列
 
-![](/Users/yuyu/Desktop/RocketMQ/img/RocketMQ角色.jpg)
+![](./img/RocketMQ角色.jpg)
 
 
 

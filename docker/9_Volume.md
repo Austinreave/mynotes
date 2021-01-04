@@ -8,16 +8,16 @@
 **能够自定义文件存在位置**
 
 ```bash
-docker run -it -v $(pwd)/my-volume:/container-data php
+docker run -it -v $(pwd)/local-path:/container-path php #$(pwd)当前所在目录
 ```
 
 有几点需要注意：
 
-- host机器的目录路径必须为全路径(准确的说需要以`/`或`~/`开始的路径)，不然docker会将其当做volume处理
+- host机器的目录路径必须为全路径(准确的说需要以`/`或`$(pwd)`开始的路径)，不然docker会将其当做volume处理
 - 如果host机器上的目录不存在，docker会自动创建该目录
 - 如果container中的目录不存在，docker会自动创建该目录
 - 如果container中的目录已经有内容，那么docker会使用host上的目录（哪怕是没有内容）将其覆盖掉
-- bind mount一般不出现在Dockerfile中，因为自定义目录可能不存在在其他宿主机上
+- bind mount一般不出现在Dockerfile中，因为在其他宿主机上，自定义目录可能不存在
 
 #### 2、使用volume
 

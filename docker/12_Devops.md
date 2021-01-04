@@ -48,6 +48,6 @@
    ```
    MOBILE_TYPE = mobile
    common_dev:
-      @./$(MOBILE_TYPE)/common/dev/up.sh #up.sh【docker-compose up --build -d】执行compose编译命令
+      @./$(MOBILE_TYPE)/common/dev/up.sh 	#up.sh执行compose编译命令，里面写的是【docker-compose up --build -d】
    ```
 

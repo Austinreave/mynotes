@@ -58,7 +58,7 @@ dockerfile就是自己制作一个镜像，这个文件里包含了制作的详�
   说明:
       为后续的RUN、CMD或者ENTRYPOINT指定工作目录
   注：
-  　　1、通过WORKDIR设置工作目录后，Dockerfile中其后的命令RUN、CMD、ENTRYPOINT、ADD、COPY等命令都会				在该目录下执行。
+  　　1、通过WORKDIR设置工作目录后，Dockerfile中其后的命令RUN、CMD、ENTRYPOINT、ADD、COPY等命令都会在该目录下执行。
      2、在使用docker run运行容器时，可以通过-w参数覆盖构建时所设置的工作目录。
      3、用WORKDIR，不要用RUN cd 尽量使用绝对目录
   ```
@@ -66,9 +66,9 @@ dockerfile就是自己制作一个镜像，这个文件里包含了制作的详�
 + ADD和COPY
 
   ```
-  作用：
+  COPY作用：
   		将本地目录拷贝到容器中
-  区别：
+  ADD和COPY区别：
   		如果执行ADD，文件是可识别的压缩格式时，则docker会帮忙解压缩
   格式：
       ADD <src>... <dest>
@@ -77,7 +77,7 @@ dockerfile就是自己制作一个镜像，这个文件里包含了制作的详�
       ADD php test/     # 添加 "test" 到 /a/test/php
       ADD curl http://example.com/foobar test/ #添加远程文件或者目录请使用curl或者wget
   注：
-  		大部分情况下，COPY优于ADD,ADD除了COPY还有额外解压功能，
+  		大部分情况下，COPY优于ADD,ADD除了COPY还有额外解压功能
   ```
 
 + ENV（设置环境变量）
@@ -89,7 +89,7 @@ dockerfile就是自己制作一个镜像，这个文件里包含了制作的详�
       ENV MYSQL_VERSION 5.6
       RUN apt-get install -y mysql-server = "${MYSQL_VERSION}"
   注：
-  		这个环境变量可以在后续的任何RUN指令中使用，这就如同在命令前面指定了环境变量前缀一样；也可以在其它指令		中直接使用这些环境变量
+  		这个环境变量可以在后续的任何RUN指令中使用，这就如同在命令前面指定了环境变量前缀一样；也可以在其它指令中直接使用这些环境变量
   ```
 
 + EXPOSE(容器端口的外放)
@@ -100,7 +100,7 @@ dockerfile就是自己制作一个镜像，这个文件里包含了制作的详�
   示例：
       EXPOSE 80 443
   注：
-  		1、这只是一个声明在运行时并不会因为这个声明应用就会开启这个端口的服务，在docker run -P时，会自动随		机映射 EXPOSE的端口。
+  		1、这只是一个声明在运行时并不会因为这个声明应用就会开启这个端口的服务，在docker run -P时，会自动随机映射 EXPOSE的端口。
   		2、帮助镜像使用者理解这个镜像服务的守护端口，以方便配置映射。
   ```
 

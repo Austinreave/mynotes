@@ -236,4 +236,4 @@ func (this *UserInfo) UserInfoGet(ctx context.Context, req *user_api.UserInfoGet
 
 #### 5. 整体效果展示
 
-![image-20201028110628828](/Users/yuyu/Library/Application Support/typora-user-images/image-20201028110628828.png)
+![image-20201028110628828](img/image-20201028110628828.png)

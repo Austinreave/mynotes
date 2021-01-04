@@ -1,16 +1,3 @@
-#### 在mac创建一台虚拟机
-
-```shell
-vagrant init centos/7 //创建Vagrantfile
-vagrant up //通过agrantfile生成虚拟机
-vagrant ssh //进入虚拟机（centos/7）
-vagrant status //当前运行的虚拟机
-vagrant halt  //停止当前虚拟机
-vagrant destory //删除当前虚拟机
-```
-
-#### 安装步骤
-
 ##### 1. 卸载旧版本
 
 ```
@@ -28,30 +15,30 @@ docker-engine
 
 1. 设置仓库前需要依赖的软件包
 
-   ```
-   sudo yum install -y yum-utils \
-   device-mapper-persistent-data \
-   lvm2
-   ```
+```
+sudo yum install -y yum-utils \
+device-mapper-persistent-data \
+lvm2
+```
 
 2. 设置仓库（下载Docker环境地址）
 
-   ```
-   #使用官方源地址（比较慢）
-   sudo yum-config-manager \
-   --add-repo \
-   https://download.docker.com/linux/centos/docker-ce.repo
-   
-   #阿里云
-   sudo yum-config-manager \
-   --add-repo \
-   http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-   
-   #清华大学源
-   sudo yum-config-manager \
-   --add-repo \
-   https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
-   ```
+```
+#使用官方源地址（比较慢）
+sudo yum-config-manager \
+--add-repo \
+https://download.docker.com/linux/centos/docker-ce.repo
+
+#阿里云
+sudo yum-config-manager \
+--add-repo \
+http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+#清华大学源
+sudo yum-config-manager \
+--add-repo \
+https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
+```
 
 ##### 3. 安装 Docker
 

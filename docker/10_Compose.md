@@ -80,7 +80,7 @@ docker-compose up
 + docker-compose.yml 文件
 
   ```
-  # 请注意，这里因为我们要使用到水平拓展，所以是不能绑定端口的
+  #请注意，这里因为我们要使用到水平拓展，所以是不能绑定端口的
   version: '3'
   services:
     web:
@@ -96,6 +96,8 @@ docker-compose up
 + 我们使用 docker-compose ps ，能够查看到此时三个 web 的容器都开启了5000端口，但是并没有映射到本地。如下：自然生成了三个 web 服务
 
   ![scale](./images/scale.png)
+
+
 
 #### docker-compose.yml 属性
 

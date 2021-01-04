@@ -28,7 +28,6 @@ conn, err := grpc.Dial(r.Scheme()+"://author/"+ServiceName, grpc.WithBalancerNam
    3. 启动watch
 
 ```
-
 // 连接etcd
 cli, err = clientv3.New(clientv3.Config{
 Endpoints:   strings.Split(r.rawAddr, ";"),
