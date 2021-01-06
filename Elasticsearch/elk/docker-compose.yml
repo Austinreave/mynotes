@@ -57,11 +57,3 @@ services:
       - efknet
 networks:
   efknet:
-
-
-
-
-
-
-
-

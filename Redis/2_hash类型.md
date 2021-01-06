@@ -2,7 +2,7 @@
 
 + 电商网站购物车设计与实现
 
-  + ![image-20200806222654119](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200806222654119.png)
+  ![image-20200806222654119](img\image-20200806222654119.png)
 
   + 操作流程
 
@@ -50,11 +50,11 @@
 
 + 双11活动日，销售手机充值卡的商家对移动、联通、电信的30元、50元、100元商品推出抢购活动，每种商品抢购上限1000张
 
-  + ![image-20200806223456532](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200806223456532.png)
+  + ![image-20200806223456532](img\image-20200806223456532.png)
 
   + 操作流程
 
-    ![image-20200806223543094](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200806223543094.png)
+    ![image-20200806223543094](img\image-20200806223543094.png)
 
 #### hash 类型数据操作的注意事项
 

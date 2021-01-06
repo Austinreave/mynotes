@@ -1,30 +1,32 @@
 **持久化过程保存什么**
 
-1. 将当前数据状态进行保存，快照形式，存储数据结果，存储格式简单，关注点在数据（RDB）
+将当前数据状态进行保存，快照形式，存储格式简单，关注点在数据（RDB）
 
-2.  将数据的操作过程进行保存，日志形式，存储操作过程，存储格式复杂，关注点在数据的操作过程（AOF）
+将数据的操作过程进行保存，存储格式复杂，关注点在数据的操作过程（AOF）
 
-![image-20200818213431786](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200818213431786.png)
+![image-20200818213431786](img\image-20200818213431786.png)
 
 **RDB启动方式** 
 
 + save 执行一次保存一次
 
 + save指令相关配置
+
+  ![image-20200818214619329](img\image-20200818214619329.png)
+
   + dbfilename dump.rdb 说明：设置本地数据库文件名，默认值为 dump.rdb ，经验：通常设置为`dump-端口号.rdb`
   + dir 说明：设置存储.rdb文件的路径 经验：通常设置成存储空间较大的目录中，目录名称`data`
   + rdbcompression yes 说明：设置存储至本地数据库时是否压缩数据，默认为 yes，采用 LZF 压缩，经验：通常默认为开启状态，如果设置为no，可以节省 CPU 运行时间，但会使存储的文件变大（巨大）
   + rdbchecksum yes 说明：设置是否进行RDB文件格式校验，该校验过程在写文件和读文件过程均进行，经验：通常默认为开启状态，如果设置为no，可以节约读写性过程约10%时间消耗，但是存储一定的数据损坏风险
-  + ![image-20200818214619329](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200818214619329.png)
 
 + save指令工作原理
-  + ![image-20200818214811579](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200818214811579.png)
+  + ![image-20200818214811579](img\image-20200818214811579.png)
   + save指令的执行会阻塞当前Redis服务器，直到当前RDB过程完成为止，有可能会造成长时间阻塞，线上环境不建议使用。
 
 + 数据量过大，单线程执行方式造成效率过低如何处理
   + bgsave指令手动启动后台保存操作，但不是立即执行
   + bgsave指令工作原理
-    + ![image-20200818215006522](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200818215006522.png)
+    + ![image-20200818215006522](img\image-20200818215006522.png)
     + bgsave命令是针对save阻塞问题做的优化。Redis内部所有涉及到RDB操作都采用bgsave的方式，save命令可以放弃使用
 
 + 反复执行保存指令，忘记了怎么办？不知道数据产生了多少变化，何时保存
@@ -34,23 +36,19 @@
     + 满足限定时间范围内key的变化数量达到指定数量即进行持久化
     + 参数：second：监控时间范围，changes：监控key的变化量
 
-  + save配置原理
-
-    + ![image-20200818215559748](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200818215559748.png)
-
     + save配置要根据实际业务情况进行设置，频度过高或过低都会出现性能问题，结果可能是灾难性的；
     + save配置中对于second与changes设置通常具有互补对应关系，尽量不要设置成包含性关系（比如 100 1 和1 1属于包含性）
     + save配置启动后执行的是bgsave操作
 
-+ RDB三种启动方式对比
++ RDB两种启动方式对比
 
-![image-20200818215830653](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200818215830653.png)
+![image-20200818215830653](img\image-20200818215830653.png)
 
 + RDB优点
   + RDB是一个紧凑压缩的二进制文件，存储效率较高
   + RDB内部存储的是redis在某个时间点的数据快照，非常适合用于数据备份，全量复制等场景
   + RDB恢复数据的速度要比AOF快很多
-  + 应用：服务器中每X小时执行bgsave备份，并将RDB文件拷贝到远程机器中，用于灾难恢复。
+  + 应用：服务器中每N个小时执行bgsave备份，并将RDB文件拷贝到远程机器中，用于灾难恢复。
 
 + RDB缺点
   + RDB方式无论是执行指令还是利用配置，无法做到实时持久化，具有较大的可能性丢失数据

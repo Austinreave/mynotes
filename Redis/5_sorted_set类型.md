@@ -6,7 +6,7 @@
 	2、zrange fans 0 -1 //加上WITHSCORES时会展示对应的分数，否则只展示成员，顺序
 	3、zrevrange fans 0 -1  //加上WITHSCORES时会展示对应的分数，否则只展示成员，倒叙
 	4、zrem fans 库里 //删除
-![image-20200813215103045](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200813215103045.png)
+![image-20200813215103045](img\image-20200813215103045.png)
 
 	//成员条件查顺序
 	5、zrangebyscore fans min max [WITHSCORES] [LIMIT] 
@@ -16,17 +16,17 @@
 	7、zremrangebyrank fans start stop 
 	//分数条件删除数据  
 	8、zremrangebyscore key min max
-![image-20200813215435404](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200813215435404.png)
+![image-20200813215435404](img\image-20200813215435404.png)
 
-<img src="C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200813220154383.png" alt="image-20200813220154383" style="zoom: 80%;" />
+<img src="img\image-20200813220154383.png" alt="image-20200813220154383" style="zoom: 80%;" />
 
 	9、集合交操作
 	zinterstore destination numkeys key [key ...]
 	10、集合并操作
 	zunionstore destination numkeys key [key ...]
-![image-20200813220308041](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200813220308041.png)
+![image-20200813220308041](img\image-20200813220308041.png)
 
-![image-20200813220744026](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200813220744026.png)
+![image-20200813220744026](img\image-20200813220744026.png)
 
 	11、获取数据对应的索引（排名）
 	zrank key member
@@ -35,7 +35,7 @@
 	12、score值获取与修改
 	zscore key member //查看分数
 	zincrby key increment member //分数增加
-![image-20200813221207859](C:\Users\星星\AppData\Roaming\Typora\typora-user-images\image-20200813221207859.png)
+![image-20200813221207859](img\image-20200813221207859.png)
 
 **sorted_set 类型数据操作的注意事项**
 

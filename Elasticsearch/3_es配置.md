@@ -126,34 +126,3 @@ xpack.security.transport.ssl.enabled: true
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

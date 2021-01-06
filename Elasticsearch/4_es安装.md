@@ -72,6 +72,8 @@ elasticsearch-setup-passwords interactive
 
 #### 5、权限管理
 
+可以对es访问索引的权限进行设置
+
 ##### 修改es账户密码方式：
 
 1. 通过curl修改（可以修改elastic账户密码）
@@ -82,9 +84,7 @@ elasticsearch-setup-passwords interactive
 
 2. 在kibana里的权限管理界面修改（不可以修改elastic账户密码）
 
-##### 权限管理
 
-可以对es访问索引的权限进行设置
 
 
 

@@ -6,7 +6,7 @@
 
 #### 为什么需要OpenTracing
 
-OpenTracing通过提供平台无关、厂商无关的API，使得开发人员能够方便的添加（或更换）追踪系统的实现。 OpenTracing提供了用于运营支撑系统的和针对特定平台的辅助程序库。程序库的具体信息请参考详细的规范。
+OpenTracing使得开发人员能够方便的添加（或更换）追踪系统的实现。 OpenTracing提供了用于运营支撑系统的和针对特定平台的辅助程序库。程序库的具体信息请参考详细的规范。
 
 #### 什么是一个Trace
 
@@ -95,15 +95,15 @@ OpenTracing通过提供平台无关、厂商无关的API，使得开发人员能
 下面都是合理的表述一个"ChildOf"关系的父子节点关系的时序图。
 
 ```
-    [-Parent Span---------]
-         [-Child Span----]
+[-Parent Span---------]
+[-Child Span----]
 
-    [-Parent Span--------------]
-         [-Child Span A----]
-          [-Child Span B----]
-        [-Child Span C----]
-         [-Child Span D---------------]
-         [-Child Span E----]
+[-Parent Span--------------]
+[-Child Span A----]
+[-Child Span B----]
+[-Child Span C----]
+[-Child Span D---------------]
+[-Child Span E----]
 ```
 
 ##### Logs
