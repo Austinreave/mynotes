@@ -2,59 +2,67 @@
 
 + 电商网站购物车设计与实现
 
+  操作流程
+
+  ```
+  结构：
+  id:user_id : {
+  	goods_id_nums1:1
+  	goods_id_info1:{}
+  	goods_id_nums2:1
+  	goods_id_info2:{}
+  }
+  
+  示例：
+  99:user_id : {
+  	101_nums:1
+  	101_info:"{"goods_name"："电脑","goods_img":"商品图片"}"
+  	201_nums:1
+  	201_info:"{"goods_name"："手机","goods_img":"商品图片"}"
+  }
+  
+  获取购物车信息
+  hget 99:user_id
+  
+  添加购物车信息
+  
+  	先获取购物车中是否存在此商品。如果存在数量怎增加
+  		hget 99:user_id 101_nums
+  		HINCRBY 99:user_id 101_nums 1
+  		
+  	如果不存在进行添加
+  		hest 99：user_id :{
+  			301_nums:1
+  			301_info:"{"goods_name"："空调","goods_img":"商品图片"}"
+  		}	
+  		
+  修改购物车信息
+  		hset 99：user_id :{
+  			101_nums:8
+  			101_info:"{"goods_name"："电动车","goods_img":"商品图片"}"
+  		}
+  	
+  删除购物车信息
+  		hdel 99：user_id 101_nums
+  		
+  获取购物车总数
+  		hlen 99:user_id
+  		
+  获取购物车所有信息
+  		hgetall  99:user_id	
+  ```
+
   ![image-20200806222654119](img\image-20200806222654119.png)
 
-  + 操作流程
-
-  + ```
-    结构：
-    user_id : {
-    	goods_id_nums1:1
-    	goods_id_info1:{}
-    	goods_id_nums2:1
-    	goods_id_info2:{}
-    }
-    
-    示例：
-    99：user_id :{
-    	101_nums:1
-    	101_info:"{"goods_name"："电脑","goods_img":"商品图片"}"
-    	201_nums:1
-    	201_info:"{"goods_name"："手机","goods_img":"商品图片"}"
-    }
-    
-    获取购物车信息
-    hget 99:user_id
-    
-    添加购物车信息
-    	先获取购物车中是否存在此商品。如果存在数量怎增加
-    		hget 99:user_id 101_nums
-    		HINCRBY 99:user_id 101_nums 1
-    	如果不存在进行添加
-    		hest 99：user_id :{
-    			301_nums:1
-    			301_info:"{"goods_name"："空调","goods_img":"商品图片"}"
-    		}
-    	修改购物车信息
-    		hset 99：user_id :{
-    			101_nums:8
-    			101_info:"{"goods_name"："电动车","goods_img":"商品图片"}"
-    		}
-    	删除购物车信息
-    		hdel 99：user_id 101_nums
-    	获取购物车总数
-    		hlen 99:user_id
-    	获取购物车所有信息
-    		hgetall  99:user_id
-    ```
+  
 
 + 双11活动日，销售手机充值卡的商家对移动、联通、电信的30元、50元、100元商品推出抢购活动，每种商品抢购上限1000张
 
-  + ![image-20200806223456532](img\image-20200806223456532.png)
+  操作流程
 
-  + 操作流程
+  ![image-20200806223543094](img\image-20200806223543094.png)
 
-    ![image-20200806223543094](img\image-20200806223543094.png)
+  ![image-20200806223456532](img\image-20200806223456532.png)
 
 #### hash 类型数据操作的注意事项
 

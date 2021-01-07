@@ -20,19 +20,11 @@
 
 <img src="img\image-20200813220154383.png" alt="image-20200813220154383" style="zoom: 80%;" />
 
-	9、集合交操作
-	zinterstore destination numkeys key [key ...]
-	10、集合并操作
-	zunionstore destination numkeys key [key ...]
-![image-20200813220308041](img\image-20200813220308041.png)
-
-![image-20200813220744026](img\image-20200813220744026.png)
-
-	11、获取数据对应的索引（排名）
-	zrank key member
-	zrevrank key member
+	9、获取数据对应的索引（排名）
+	zrank key member #正序
+	zrevrank key member #倒序
 	
-	12、score值获取与修改
+	10、score值获取与修改
 	zscore key member //查看分数
 	zincrby key increment member //分数增加
 ![image-20200813221207859](img\image-20200813221207859.png)
