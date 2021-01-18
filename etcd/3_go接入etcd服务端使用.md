@@ -34,6 +34,7 @@ func Register(etcdAddr, name string, addr string, ttl int64) error {
          return err
       }
    }
+
 //定时器异步执行
 ticker := time.NewTicker(time.Second * time.Duration(ttl))
 //主要作用保证grpc服务和etcd保持持久连接（断电、断网）

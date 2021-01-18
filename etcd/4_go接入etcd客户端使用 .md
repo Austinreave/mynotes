@@ -37,7 +37,6 @@ DialTimeout: 15 * time.Second,
 //使用watch机制进行长连接事实监控服务端的消息
 go r.watch("/" + target.Scheme + "/" + target.Endpoint + "/")
 
-
 //watch
 func (r *etcdResolver) watch(keyPrefix string) {
 	var addrList []resolver.Address //存放rpc服务地址的切片
