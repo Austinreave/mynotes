@@ -3,6 +3,7 @@
 - Docker Compose是一个方便操作docker命令（方便管理docker）的工具，可以通过docker-compose操作任意的docker命令。
 - 这个工具可以通过一个yml文件定义多容器的docker应用
 - 通过一条命令就可以根据yml文件的定义去创建或者管理这多个容器
+- ‌只能在单机部署
 
 #### 安装 Docker Compose
 

@@ -10,7 +10,7 @@ services:
       - discovery.type=single-node
     volumes:
       - ./elasticsearch7/plugins:/usr/share/elasticsearch/plugins #插件文件挂载，ik分词器存放即可
-      - ./elasticsearch7/data:/usr/share/elasticsearch/data #数据文件挂载
+      - ./elasticsearch7/data:/usr/share/elasticsearch/data #数据文件挂载 需要配置最高权限
       - ./elasticsearch7/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml #配置文件挂载
     networks:
       - efknet
@@ -56,18 +56,35 @@ xpack.monitoring.ui.container.elasticsearch.enabled: true
 i18n.locale: zh-CN #中文
 #Elasticsearch 设置了基本的权限认证，该配置项提供了用户名和密码，用于 Kibana 启动时维护索引。Kibana 用户仍需要 Elasticsearch 由 Kibana 服务端代理的认证。
 elasticsearch.username: "elastic"
-elasticsearch.password: "admin888"
+elasticsearch.password: "dbc_default_password"
 ```
 
 #### 4、编排容器服务及生成账号密码
 
 ```
-//编排
+//1编排
 docker-compose up -d
-//进入es容器
-docker exec -it elasticsearch bin/bash
-//设置用户名和密码
-elasticsearch-setup-passwords interactive
+//2进入es容器
+docker exec -it 5aa6181e439d /bin/bash
+
+//3设置用户名和密码 dbc_default_password
+elasticsearch-setup-passwords interactive 
+
+//4登录kibana进行账号设置
+  测试
+    账号: shop_search_development
+    密码: dbc_ssdp123
+    索引: dev_shop_index
+  生产
+    账号: shop_search_production
+    密码: dbc_ssdp123
+    索引: prod_shop_index
+
+//5删除那些指定不明确的副本分片，es状态为绿色
+PUT dev_shop_index/_settings
+{
+   "number_of_replicas" : 0
+}
 ```
 
 #### 5、权限管理
@@ -83,30 +100,3 @@ elasticsearch-setup-passwords interactive
    ```
 
 2. 在kibana里的权限管理界面修改（不可以修改elastic账户密码）
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

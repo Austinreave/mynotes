@@ -23,7 +23,7 @@ etcdservice.Register(EtcdAddr, ServiceName, addr, 5)
 const schema = "ns"//固定
 func Register(etcdAddr, name string, addr string, ttl int64) error {
    var err error
-	//构建etcd连接	
+	 //构建etcd连接	
    if cli == nil {
       cli, err = clientv3.New(clientv3.Config{
          Endpoints:   strings.Split(etcdAddr, ";"),
@@ -35,9 +35,9 @@ func Register(etcdAddr, name string, addr string, ttl int64) error {
       }
    }
 
-//定时器异步执行
-ticker := time.NewTicker(time.Second * time.Duration(ttl))
-//主要作用保证grpc服务和etcd保持持久连接（断电、断网）
+	//定时器异步执行
+	ticker := time.NewTicker(time.Second * time.Duration(ttl))
+	//主要作用保证grpc服务和etcd保持持久连接（断电、断网）
    go func() {
       for {
       	//先进行获取服务名称
