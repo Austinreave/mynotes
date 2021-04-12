@@ -1,10 +1,33 @@
 #### 实现原理
 
-当Docker进程启动时，会在主机上创建一个名为docker0的虚拟网桥，此主机上启动的Docker容器会连接到这个虚拟网桥上。虚拟网桥的工作方式和物理交换机类似，这样主机上的所有容器就通过交换机连在了一个二层网络中。
+当你安装Docker时它会自动创建三个网络，其中包含一个名为docker0的虚拟网桥，此主机上启动的Docker容器会连接到这个虚拟网桥上。虚拟网桥的工作方式和物理交换机类似，这样主机上的所有容器就通过交换机连在了一个二层网络中，和linux网络模式一个道理docker只是更小颗粒的实现了容器之间的网络通信规则（类似进程和线程的关系）
+
+可以使用以下docker network ls命令列出这些网络：
+
+```
+$ docker network ls
+NETWORK ID          NAME                DRIVER
+7fca4eb8c647        bridge              bridge
+9f904ee27bf5        none                null
+cf03ee007fb4        host                host
+
+
+Docker内置这三个网络，运行容器时：
+		host模式：使用 --net=host 指定。
+		none模式：使用 --net=none 指定。
+		bridge模式：使用 --net=bridge 指定，默认设置。
+		container模式：使用 --net=container:NAME_or_ID 指定。 
+```
+
+
 
 Docker启动一个容器时会根据Docker网桥的网段分配给容器一个IP地址，称为Container-IP，同时Docker网桥是每个容器的默认网关。因为在同一宿主机内的容器都接入同一个网桥，这样容器之间就能够通过容器的Container-IP直接通信。
 
+
+
 Docker网桥是宿主机虚拟出来的，并不是真实存在的网络设备，外部网络是无法寻址到的，这也意味着外部网络无法通过直接Container-IP访问到容器。如果容器希望外部能够访问到，可以通过映射容器端口到宿主主机（端口映射），即docker run创建容器时候通过 -p 或 -P 参数来启用，访问容器的时候就通过[宿主机IP]:[容器端口]访问容器。
+
+
 
 #### host模式
 
@@ -30,33 +53,11 @@ Docker网桥是宿主机虚拟出来的，并不是真实存在的网络设备�
 
 #### bridge模式
 
-从docker0子网中分配一个IP给容器使用，并设置docker0的IP地址为容器的默认网关。在主机上创建一对虚拟网卡veth pair设备，Docker将veth pair设备的一端放在新创建的容器中，并命名为eth0（容器的网卡），另一端放在主机中，以vethxxx这样类似的名字命名，并将这个网络设备加入到docker0网桥中。可以通过brctl show命令查看。
+从docker0子网中分配一个IP给容器使用，并设置docker0的IP地址为容器的默认网关。在主机上创建一对虚拟网卡veth pair设备，Docker将veth pair设备的一端放在新创建的容器中，并命名为eth0（容器的网卡），另一端放在主机中，以vethxxx这样类似的名字命名，并将这个网络设备加入到docker0网桥中。
 
 bridge模式是docker的默认网络模式，不写--net参数，就是bridge模式。使用docker run -p时，docker实际是在iptables做了DNAT规则，实现端口转发功能。可以使用iptables -t nat -vnL查看。
 
 ![image-20200904160109035](./images/image-20200904160109035.png)
-
-#### 默认网络
-
-当你安装Docker时，它会自动创建三个网络。你可以使用以下docker network ls命令列出这些网络：
-
-```
-$ docker network ls
-NETWORK ID          NAME                DRIVER
-7fca4eb8c647        bridge              bridge
-9f904ee27bf5        none                null
-cf03ee007fb4        host                host
-```
-
-Docker内置这三个网络，运行容器时：
-
-host模式：使用 --net=host 指定。
-
-none模式：使用 --net=none 指定。
-
-bridge模式：使用 --net=bridge 指定，默认设置。
-
-container模式：使用 --net=container:NAME_or_ID 指定。 
 
 #### Docker网络命令
 

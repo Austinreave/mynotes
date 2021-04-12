@@ -1,6 +1,6 @@
 #### Docker Compose 概述
 
-- Docker Compose是一个方便操作docker命令（方便管理docker）的工具，可以通过docker-compose操作任意的docker命令。
+- Docker Compose是一个方便操作docker命令的工具，可以通过docker-compose操作任意的docker命令。
 - 这个工具可以通过一个yml文件定义多容器的docker应用
 - 通过一条命令就可以根据yml文件的定义去创建或者管理这多个容器
 - ‌只能在单机部署
@@ -20,7 +20,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose -v
 ```
 
-#### Docker Compose 常用命令与配置
+#### Docker Compose 常用命令与配置(需要在docker-compose.yml所在目录)
 
 - **ps**：列出所有运行容器
 
@@ -70,13 +70,7 @@ docker-compose rm redis
 docker-compose up
 ```
 
-+ **down**：停止和删除容器、网络、卷、镜像
-
-```
--v, –volumes，删除已经在compose文件中定义的和匿名的附在容器上的数据卷
-```
-
-**scale**：docker 的水平拓展和负载均衡 
++ **scale**：docker 的水平拓展和负载均衡 
 
 + docker-compose.yml 文件
 
@@ -94,7 +88,7 @@ docker-compose up
   docker-compose up --scale web=3 -d #这里的 --scale web=3，是我们设定的服务里面的web 需要启动三个容器 
   ```
 
-+ 我们使用 docker-compose ps ，能够查看到此时三个 web 的容器都开启了5000端口，但是并没有映射到本地。如下：自然生成了三个 web 服务
++ 我们使用 docker-compose ps ，能够查看到此时三个 web 的容器都开启了80端口，但是并没有映射到本地。如下：自然生成了三个 web 服务
 
   ![scale](./images/scale.png)
 
@@ -102,7 +96,41 @@ docker-compose up
 
 #### docker-compose.yml 属性
 
-![d5b29f002e8e45b2aae71f94333697c](./images/d5b29f002e8e45b2aae71f94333697c.png)
+shop.back.dockerfile
+
+```
+#多阶段构建从17.05开始支持，当前镜像别名为builder
+FROM 39.96.27.29:5000/library/golang:builder AS builder
+#定义参数
+ARG ENVARG
+#定义工作目录，镜像各层的工作目录为当前目录
+WORKDIR /go/src
+#拷贝上下文下的所有文件到工作目录
+COPY . .
+#下载程序以来的所有包及构建生成程序
+RUN git clone http://zhengxiuming:zheng0513ming@39.96.27.29/zhengxiuming/shop_mobile_back.git \
+&& cd shop_mobile_back \
+&& CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -a -v\
+&& mkdir -p /release/conf \
+&& cp -r shop_mobile_back /release \
+&& cp -rf ./conf/$ENVARG/. /release/conf
+
+#二级镜像，真实需要的
+FROM 39.96.27.29:5000/library/golang:runner
+
+WORKDIR /app
+#变量程序名称
+COPY --from=builder /release  . \
+&& mkdir -p /app/logs
+
+# HEALTHCHECK --interval=1m30s --timeout=10s \
+#  CMD curl -fs http://localhost/v1/connect/status || exit 1
+
+EXPOSE 9093
+
+ENTRYPOINT ["./shop_mobile_back"]
+
+```
 
 ![image-20200913154003883](./images/image-20200913154003883.png)
 
@@ -111,7 +139,7 @@ docker-compose up
 + **services**：多个容器集合
 
   + 一个service代表一个container，这个container可以从dockerhub的image来创建，或者从本地的Dockerfile中build出来的image来创建
-  + service的启动类似docker run，我们可以给其指定network和valume，所以可以给service指定network和Volume的引用
+  + service的启动类似docker run，我们可以给其指定network和volume，所以可以给service指定network和Volume的引用
 
 + **build**：配置构建时，Compose 会利用它自动构建镜像，该值可以是一个路径，也可以是一个对象，用于指定 Dockerfile 参数
 
@@ -121,6 +149,13 @@ build:
       dockerfile: Dockerfile #Dockerfile名称
       args: #Dockerfile 在 build 过程中需要的参数
   ```
+
++ **image**：指定服务所使用的镜像（build时是规定镜像名称）
+
+  ```undefined
+  image: java
+  ```
+
 
 + **environment**：环境变量配置，可以用数组或字典两种方式
 
@@ -135,23 +170,15 @@ build:
   ```bash
   expose:
       - "3000"
-      - "8000"
   ```
 
 + **ports**：对外暴露
 
   ```objectivec
   ports:   # 暴露端口信息  - "宿主机端口:容器暴露端口"
-  - "8763:8763"
-  - "8763:8763"
+  	- "8763:8763"
   ```
-
-+ **image**：指定服务所使用的镜像（build时是规定镜像名称）
-
-  ```undefined
-  image: java
-  ```
-
+  
 + **depends_on**：默认情况下 compose 启动容器的顺序是不确定的，但是有些场景下我们希望能够控制容器的启动顺序，比如应该让运行数据库的程序先启动。我们可以通过 depends_on 来解决有依赖关系的容器的启动顺序问题
 
   ```
@@ -174,7 +201,7 @@ build:
 
   
 
-+ **network_mode**：设置网络模式
++ **networks**：设置网络模式，bridge代表每个容器有自己的网络空间，并且生成一对 veth pair eth0是容器接口， eth1是bridge接口，所以只要加入bridge的容器都可以进行通信
 
   ![037c25d05d25b44d50f3400d7a2eae6](./images/037c25d05d25b44d50f3400d7a2eae6.png)
 
@@ -183,10 +210,8 @@ build:
   ```csharp
   services
       mysql:
-  	  images: mysql
-        volumes:
-  		-mysql-data:/var/lib/mysql #挂载
-  volumes:
-  	mysql-data #创建volumes
+  	  	images: mysql
+      	volumes:
+  				-mysql-data:/var/lib/mysql #挂载
   ```
 

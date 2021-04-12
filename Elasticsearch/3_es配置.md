@@ -24,13 +24,13 @@ node.data: true
 配置文件中给出了三种配置高性能集群拓扑结构的模式,如下：
 
 ```
-#1、如果你想让节点从不选举为主节点,只用来存储数据,可作为负载器
+#1、如果你想让节点不选举为主节点,只用来存储数据,可作为负载器
 node.master: false
 node.data: true
 #2、如果想让节点成为主节点,且不存储任何数据,并保有空闲资源,可作为协调器
 node.master: true
 node.data: false
-#3、如果想让节点既不称为主节点,又不成为数据节点,那么可将他作为搜索器,从节点	中获取数据,生成搜索结果等
+#3、如果想让节点既不称为主节点,又不成为数据节点,那么可将他作为搜索器,从节点中获取数据,生成搜索结果等
 node.master: false
 node.data: false
 ```
@@ -73,20 +73,27 @@ bootstrap.mlockall: true
 ```
 #设置绑定的ip地址,可以是ipv4或ipv6的,默认为0.0.0.0
 network.bind_host: 192.168.0.1
+
 #设置其它节点和该节点交互的ip地址,如果不设置它会自动设置,值必须是个真实的ip地址
 network.publish_host: 192.168.0.1
+
 #同时设置bind_host和publish_host上面两个参数
 network.host: 192.168.0.1
+
 #设置节点间交互的tcp端口,默认是9300
 transport.tcp.port: 9300
+
 #设置是否压缩tcp传输时的数据，默认为false,不压缩
 transport.tcp.compress: true
+
 #设置对外服务的http端口,默认为9200
 http.port: 9200
+
 #设置请求内容的最大容量,默认100mb
 http.max_content_length: 100mb
+
 #使用http协议对外提供服务,默认为true,开启
-http.enabled: false
+http.enabled: true
 ```
 
 ##### 网关配置参数
@@ -94,18 +101,21 @@ http.enabled: false
 ```
 #gateway的类型,默认为local即为本地文件系统,可以设置为本地文件系统
 gateway.type: local
-#下面的配置控制怎样以及何时启动一整个集群重启的初始化恢复过程(当使用shard gateway时,是为了尽可能的重用local data(本地数据))一个集群中的N个节点启动后,才允许进行恢复处理
+
+#下面的配置控制集群重启的初始化恢复过程，一个集群中的N个节点启动后才允许进行恢复处理
 gateway.recover_after_nodes: 1
+
 #设置初始化恢复过程的超时时间,超时时间从上一个配置中配置的N个节点启动后算起
 gateway.recover_after_time: 5m
-#设置这个集群中期望有多少个节点.一旦这N个节点启动(并且recover_after_nodes也符合),立即开始恢复过程(不等待recover_after_time超时)
+
+#设置这个集群中期望有多少个节点，一旦这N个节点启动(并且recover_after_nodes也符合),立即开始恢复过程(不等待recover_after_time超时)
 gateway.expected_nodes: 2
 ```
 
 ##### 集群发现配置参数
 
 ```
-#设置这个参数来保证集群中的节点可以知道其它N个有master资格的节点.默认为1,对于大的集群来说,可以设置大一点的值(2-4)
+#设置这个参数来保证集群中的节点可以知道其它N有个master资格的节点.默认为1,对于大的集群来说,可以设置大一点的值(2-4)
 discovery.zen.minimum_master_nodes: 1
 #探查的超时时间,默认3秒,提高一点以应对网络不好的时候,防止脑裂
 discovery.zen.ping.timeout: 3s

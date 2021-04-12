@@ -10,7 +10,7 @@
 
 - **Character Filters**：针对原始文本处理，比如去除 html 标签
 - **Tokenizer**：按照规则切分为单词，比如按照空格切分
-- **Token Filters**：将切分的单词进行加工，比如大写转小写，删除 stopwords，增加同义语
+- **Token Filters**：将切分的单词进行加工，比如大写转小写
 
 ![20200308175336734](./images/20200308175336734.png)
 

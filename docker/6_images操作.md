@@ -2,19 +2,21 @@
 
 1. 通过Dockerfile自定义创建（推荐）
 
-```
-#使用当前目录的 Dockerfile 创建镜像，标签为 yuyu/centos:v1。
-docker build -t yuyu/centos:v1 . 
-#也可以通过 -f Dockerfile 文件的位置：
-docker build -f /path/to/a/Dockerfile .
-```
+   ```
+   #docker build用于使用 Dockerfile 创建镜像
+   #使用当前目录的 Dockerfile 创建镜像，标签为 yuyu/centos:v1 
+   docker build -t yuyu/centos:v1 .
+   
+   #也可以通过 -f Dockerfile 文件的位置
+   docker build -f /path/to/a/Dockerfile -t yuyu/centos:v1 .
+   ```
 
-1. 从镜像仓库获取
+2. 从镜像仓库获取
 
-```
-#yuyu代表第三方镜像,如果没有则是官方提供的,3.2.4指的是要拉取的版本，如果不写则默认是最新的版本等同于latest
-docker pull yuyu/mongo:3.2.4
-```
+   ```
+   #google代表第三方镜像,如果没有则是默认官方提供的，3.2.4指的是要拉取的版本，如果不写则默认是最新的版本等同于latest
+   docker pull google/mongo:3.2.4
+   ```
 
 #### images操作
 

@@ -5,18 +5,19 @@
 #### 提交镜像到Docker hub
 
 1. 到https://hub.docker.com/去注册属于你自己的帐号
+
 2. 提交镜像格式: 执行 `docker commit -a "作者" -m "描述" "本地镜像id" 账号/镜像:版本`
 
-```
-//这个跟git的其实是一样的,先提交镜像到本地,才能推送到你的远程镜像仓库,一定要注意提交的镜像名格式 帐号/名字:如 user/nginx:v1.0,否则无法推送
-docker commit -a "user" -m "test commit" 30740bffc489 user/nginx:v1.0
-```
+   ```
+   #一定要注意提交的镜像名格式 帐号/名字:如 user/nginx:v1.0,否则无法推送
+   docker commit -a "user" -m "test commit" 30740bffc489 user/nginx:v1.0 
+   ```
 
 3. 执行命令:`docker login` 登录你的 hub.docker 帐号
 4. 推送: `docker push user/nginx:v1.0`
 5. 到https://cloud.docker.com/进行查看即可
 
-#### 提交Dockerfile到Docker hub
+#### 通过Dockerfile操控Docker hub
 
 + 将dockerHub和gitHub进行关联（dockerHub里面有专门的设置）
 + 在gitHub上建一个代码仓库，专门用于存放本地的Dockerfile
@@ -32,7 +33,7 @@ docker commit -a "user" -m "test commit" 30740bffc489 user/nginx:v1.0
   docker run -d -v /opt/registry:/var/lib/registry -p 5000:5000 --name myregistry registry:2
   ```
 
-+ 要通过docker tag将该镜像标志为要推送到私有仓库：
++ 通过docker tag将`nginx:latest`镜像标志为要推送到私有仓库：
 
   ```
   docker tag nginx:latest localhost:5000/nginx:latest
@@ -54,4 +55,7 @@ docker commit -a "user" -m "test commit" 30740bffc489 user/nginx:v1.0
 
 #### harbor 的搭建(推荐)
 
-+ docker 官方提供的私有仓库 registry，用起来虽然简单 ，但在管理的功能上存在不足。 Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，harbor使用的是官方的docker registry(v2命名是distribution)服务去完成。harbor在docker distribution的基础上增加了一些安全、访问控制、管理的功能以满足企业对于镜像仓库的需求。
++ docker 官方提供的私有仓库 registry，用起来虽然简单 ，但在管理的功能上存在不足。 
++ Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器，harbor使用的是官方的docker registry(v2命名是distribution)服务去完成。
++ harbor在docker distribution的基础上增加了一些安全、访问控制、管理的功能以满足企业对于镜像仓库的需求。
+

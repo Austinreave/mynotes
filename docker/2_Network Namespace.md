@@ -22,7 +22,7 @@
     ns0
     ```
     
-    然后我们将veth0加入到ns0，将veth1加入到ns1，如下所示：
+    然后我们将（veth pair）veth0加入到ns0，将veth1加入到ns1，如下所示：
 
     ```bash
   $ ip link set veth0 netns ns0
@@ -80,7 +80,4 @@
 
   ![image-20200904151034510](./images/image-20200904151034510.png)
 
-+ Linux通过Network Namespace实现了网络的隔离，使网络协议栈之间互不干扰；并通过veth pair和网桥实现了相同主机上多个Network Namespace之间的数据通信
-
-
-
++ Linux通过Network Namespace实现了网络的隔离，使网络协议栈之间互不干扰，并通过veth pair和网桥实现了相同主机上多个Network Namespace之间的数据通信
