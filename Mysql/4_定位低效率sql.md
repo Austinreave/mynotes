@@ -2,7 +2,7 @@
 
 #### explain分析执行计划
 
-通过以上步骤查询到效率低的 SQL 语句后，可以通过 EXPLAIN或者 DESC命令获取 MySQL如何执行 SELECT 语句的信息，包括在 SELECT 语句执行过程中表如何连接和连接的顺序。
+通过以上步骤查询到效率低的 SQL 语句后，可以通过 EXPLAIN命令获取 MySQL如何执行 SELECT 语句的信息，包括在 SELECT 语句执行过程中表如何连接和连接的顺序。
 
 查询SQL语句的执行计划 ： 
 
@@ -25,6 +25,8 @@ explain  select * from tb_item where id = 1;
 | extra         | 其他的额外的执行计划信息，在该列展示 。                      |
 
 ##### explain 之 id
+
+id值越大，优先级越高，越先被执行，先执行t_user再执行user_role最后执行t_role
 
 ![1556103009534](./img/1556103009534.png) 
 

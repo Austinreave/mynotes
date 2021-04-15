@@ -17,7 +17,7 @@
     + 因读阻塞的goroutine会被向channel写入数据的goroutine唤醒
   + sendq：
     + 存放写管道数据的协程队列
-    + 就是当多个goroutinee往管道写数据时会排队写入，如果管道满了则阻塞
+    + 就是当多个goroutine往管道写数据时会排队写入，如果管道满了则阻塞
     + 被阻塞的goroutine将会挂在channel的等待队列中
     + 因写阻塞的goroutine会被从channel读数据的goroutine唤醒
   + ![01chan数据结构](../img\01chan数据结构.png)

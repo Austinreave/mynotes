@@ -16,11 +16,13 @@ show variables like 'log_error%';
 
 ![1553993244446](./img/1553993244446.png) 
 
+
+
 #### 2 二进制日志
 
 ##### 2.1概述
 
-二进制日志（BINLOG）记录了所有的 DDL（数据定义语言）语句和 DML（数据操纵语言）语句，但是不包括数据查询语句。此日志对于灾难时的数据恢复起着极其重要的作用，MySQL的主从复制， 就是通过该binlog实现的。
+二进制日志（BINLOG）记录了所有的 DDL（数据定义语言）语句和 DML（数据操作语言）语句，但是不包括数据查询语句。此日志对于灾难时的数据恢复起着极其重要的作用，MySQL的主从复制， 就是通过该binlog实现的。
 
 二进制日志，默认情况下是没有开启的，需要到MySQL的配置文件中开启，并配置MySQL日志的格式。 配置文件位置 : /usr/my.cnf
 
@@ -37,11 +39,11 @@ binlog_format=STATEMENT
 
 **STATEMENT**
 
-该日志格式在日志文件中记录的都是SQL语句（statement），每一条对数据进行修改的SQL都会记录在日志文件中，通过Mysql提供的mysqlbinlog工具，可以清晰的查看到每条语句的文本。主从复制的时候，从库（slave）会将日志解析为原文本，并在从库重新执行一次。
+该日志格式在日志文件中记录的是每一条sql。
 
 **ROW**
 
-该日志格式在日志文件中记录的是每一行的数据变更，而不是记录SQL语句。比如，执行SQL语句 ： update tb_book set status='1' , 如果是STATEMENT 日志格式，在日志中会记录一行SQL文件； 如果是ROW，由于是对全表进行更新，也就是每一行记录都会发生变更，ROW 格式的日志中会记录每一行的数据变更。
+该日志格式在日志文件中记录的是每一条sql的数据修改的记录日志。
 
 ##### 2.3 日志读取
 
@@ -86,7 +88,6 @@ log_bin=mysqlbin
 
 #配置二进制日志的格式
 binlog_format=ROW
-
 ```
 
 插入数据 :
@@ -135,17 +136,18 @@ Reset Master
 
 执行指令 ``` purge master logs before 'yyyy-mm-dd hh24:mi:ss'``` ，该命令将删除日志为 "yyyy-mm-dd hh24:mi:ss" 之前产生的所有日志 。
 
+
+
 #### 3 查询日志
 
 查询日志中记录了客户端的所有操作语句，而二进制日志不包含查询数据的SQL语句。默认情况下， 查询日志是未开启的。如果需要开启查询日志，可以设置以下配置 ：
 
 ```
-#该选项用来开启查询日志 ， 可选值 ： 0 或者 1 ； 0 代表关闭， 1 代表开启 
+#该选项用来开启查询日志 0 代表关闭， 1 代表开启 
 general_log=1
 
 #设置日志的文件名 ， 如果没有指定， 默认的文件名为 host_name.log 
 general_log_file=file_name
-
 ```
 
 在 mysql 的配置文件 /usr/my.cnf 中配置如下内容 ： 
@@ -159,23 +161,24 @@ select * from tb_book;
 select * from tb_book where id = 1;
 update tb_book set name = 'lucene入门指南' where id = 5;
 select * from tb_book where id < 8;
-
 ```
 
 执行完毕之后， 再次来查询日志文件 ： 
 
 ![1554128089851](./img/1554128089851.png) 
 
+
+
 #### 4 慢查询日志
 
-慢查询日志记录了所有执行时间超过参数 long_query_time 设置值并且扫描记录数不小于 min_examined_row_limit 的所有的SQL语句的日志。long_query_time 默认为 10 秒，最小为 0， 精度可以到微秒。
+慢查询日志记录了所有执行时间超过参数 long_query_time 设置值，并且扫描记录数不小于 min_examined_row_limit 的所有的SQL语句的日志。long_query_time 默认为 10 秒，最小为 0， 精度可以到微秒。
 
 ##### 4.1 文件位置和格式
 
 慢查询日志默认是关闭的 。可以通过两个参数来控制慢查询日志 ：
 
 ```
-# 该参数用来控制慢查询日志是否开启， 可取值： 1 和 0 ， 1 代表开启， 0 代表关闭
+# 该参数用来控制慢查询日志是否开启，1 代表开启， 0 代表关闭
 slow_query_log=1 
 
 # 该参数用来指定慢查询日志的文件名
@@ -185,8 +188,6 @@ slow_query_log_file=slow_query.log
 long_query_time=10
 
 ```
-
-
 
 ##### 4.2 日志的读取
 
@@ -208,6 +209,8 @@ select id, title,price,num ,status from tb_item where id = 1;
 
 由于该语句执行时间很短，为0s ， 所以不会记录在慢查询日志中。
 
+
+
 ```
 select * from tb_item where title like '%阿尔卡特 (OT-927) 炭黑 联通3G手机 双卡双待165454%' ;
 ```
@@ -215,6 +218,8 @@ select * from tb_item where title like '%阿尔卡特 (OT-927) 炭黑 联通3G�
 ![1554130532577](./img/1554130532577.png) 
 
 该SQL语句 ， 执行时长为 26.77s ，超过10s ， 所以会记录在慢查询日志文件中。
+
+
 
 3） 查看慢查询日志文件
 
